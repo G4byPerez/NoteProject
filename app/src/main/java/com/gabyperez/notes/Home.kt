@@ -25,6 +25,7 @@ class Home : Fragment() {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val rv = root.findViewById<RecyclerView>(R.id.listNotes)
 
+        //view note
         lifecycleScope.launch {
             notes = NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao()
                 .getAllNotes()

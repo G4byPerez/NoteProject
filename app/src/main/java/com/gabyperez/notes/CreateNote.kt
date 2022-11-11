@@ -21,6 +21,14 @@ class CreateNote : Fragment() {
         val binding = DataBindingUtil.inflate<FragmentCreateNoteBinding>(inflater,
             R.layout.fragment_create_note,container,false)
 
+        //edit
+        var id = -1;
+        if(arguments?.getString("title") != null) {
+            binding.title.setText(arguments?.getString("title"))
+            binding.description.setText(arguments?.getString("description"))
+            id = arguments?.getString("id")!!.toInt()
+        }
+
         binding.save.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("title", binding.title.text.toString())
@@ -29,9 +37,17 @@ class CreateNote : Fragment() {
 
             //Insert
             lifecycleScope.launch{
-                val newNote = Note( binding.title.text.toString(),binding.description.text.toString(),2,"","",false)
-                NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().insert(newNote)
-                NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAllNotes()
+                if (id == -1){
+                    //insert new note
+                    val newNote = Note( binding.title.text.toString(),binding.description.text.toString(),2,"","",false)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().insert(newNote)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAllNotes()
+                } else {
+                    //update note
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().updateNote(binding.title.text.toString(),binding.description.text.toString(),id)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAllNotes()
+                }
+
             }
 
             //Navigation
