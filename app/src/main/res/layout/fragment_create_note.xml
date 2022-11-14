@@ -54,6 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="36dp"
+            android:background="#CDDC39"
+            android:backgroundTint="#CDDC39"
             android:text="@string/guardar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -64,6 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginBottom="36dp"
+            android:background="#FF5722"
+            android:backgroundTint="#FF5722"
             android:text="@string/cancelar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/save" />
