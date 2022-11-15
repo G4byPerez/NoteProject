@@ -2,29 +2,29 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".CreateNote">
+    tools:context=".CreateTask">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/title"
-            android:layout_width="421dp"
-            android:layout_height="64dp"
+            android:id="@+id/titleT"
+            android:layout_width="412dp"
+            android:layout_height="65dp"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="23dp"
+            android:layout_marginBottom="21dp"
             android:hint="@string/titulo"
             android:importantForAutofill="no"
             android:inputType="text"
             android:maxLines="2"
-            app:layout_constraintBottom_toTopOf="@+id/description"
+            app:layout_constraintBottom_toTopOf="@+id/descriptionT"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/floatingActionButtonT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -38,10 +38,10 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/save"
+            android:id="@+id/saveT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="36dp"
             android:backgroundTint="#CDDC39"
             android:text="@string/guardar"
@@ -49,7 +49,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnCancelT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -57,22 +57,42 @@
             android:backgroundTint="#FF5722"
             android:text="@string/cancelar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/save"
-            />
+            app:layout_constraintStart_toEndOf="@+id/saveT" />
 
         <EditText
-            android:id="@+id/description"
-            android:layout_width="383dp"
+            android:id="@+id/descriptionT"
+            android:layout_width="374dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="391dp"
+            android:layout_marginBottom="35dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/descripcion"
             android:inputType="textMultiLine"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleT" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginBottom="413dp"
+            android:text="@string/fecha_inicio"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title" />
+            app:layout_constraintTop_toBottomOf="@+id/descriptionT" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:text="@string/fecha_fin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

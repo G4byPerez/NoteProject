@@ -62,7 +62,7 @@
                 android:id="@+id/btnNota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_colorNormal="@color/white"
+                app:fab_colorNormal="#C9B8F1"
                 app:fab_icon="@drawable/norte"
                 app:fab_size="mini" />
 
@@ -70,7 +70,7 @@
                 android:id="@+id/btnTarea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_colorNormal="@color/white"
+                app:fab_colorNormal="#C9B8F1"
                 app:fab_icon="@drawable/t"
                 app:fab_size="mini" />
 

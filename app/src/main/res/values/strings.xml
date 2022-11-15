@@ -10,4 +10,6 @@
     <string name="delete">delete</string>
     <string name="edit">Edit</string>
     <string name="type">Type</string>
+    <string name="fecha_inicio">Fecha Inicio</string>
+    <string name="fecha_fin">Fecha Fin</string>
 </resources>

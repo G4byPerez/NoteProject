@@ -45,6 +45,12 @@ class Home : Fragment() {
             view?.findNavController()?.navigate(R.id.action_home2_to_createNote)
         }
 
+        //Navigation
+        task.setOnClickListener {
+            //no cambie a la pantalla que corresponde
+            view?.findNavController()?.navigate(R.id.action_home2_to_createTask)
+        }
+
         return root.rootView
     }
 }

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_home2_to_createNote"
             app:destination="@id/createNote" />
+        <action
+            android:id="@+id/action_home2_to_createTask"
+            app:destination="@id/createTask" />
     </fragment>
     <fragment
         android:id="@+id/createNote"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_create_note" >
         <action
             android:id="@+id/action_createNote_to_home2"
+            app:destination="@id/home2" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTask"
+        android:name="com.gabyperez.notes.CreateTask"
+        android:label="fragment_create_task"
+        tools:layout="@layout/fragment_create_task" >
+        <action
+            android:id="@+id/action_createTask_to_home2"
             app:destination="@id/home2" />
     </fragment>
 </navigation>
