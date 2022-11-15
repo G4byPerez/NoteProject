@@ -60,7 +60,15 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
             bundle.putString("title", p.title)
             bundle.putString("description", p.description)
             bundle.putString("type", p.type.toString())
-            it.findNavController().navigate(R.id.action_home2_to_createNote,bundle)
+            bundle.putString("dateEnd", p.dateEnd)
+            bundle.putString("hourEnd", p.hourEnd)
+
+            //Navigation
+            if (p.type == 1){
+                it.findNavController().navigate(R.id.action_home2_to_createNote,bundle)
+            } else {
+                it.findNavController().navigate(R.id.action_home2_to_createTask,bundle)
+            }
         }
     }
 

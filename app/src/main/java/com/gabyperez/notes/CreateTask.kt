@@ -35,6 +35,8 @@ class CreateTask : Fragment() {
         if(arguments?.getString("title") != null) {
             binding.titleTask.setText(arguments?.getString("title"))
             binding.descriptionTask.setText(arguments?.getString("description"))
+            binding.txtDate.setText(arguments?.getString("dateEnd"))
+            binding.txtHour.setText(arguments?.getString("hourEnd"))
             id = arguments?.getString("id")!!.toInt()
         }
 
@@ -53,20 +55,26 @@ class CreateTask : Fragment() {
             lifecycleScope.launch{
                 if (id == -1){
                     //insert new task --> type=2
-                    val newNote = Note(
+                    val newTask = Note(
                         2,
                         binding.titleTask.text.toString(),
                         binding.descriptionTask.text.toString(),
                         "",
-                        "",
-                        "",
+                        fecha.text.toString(),
+                        hora.text.toString(),
                         false)
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().insert(newNote)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().insert(newTask)
                     NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAll()
                 } else {
                     //update note
-                    //Change
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().updateNote(binding.titleTask.text.toString(),binding.descriptionTask.text.toString(),id)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().
+                    updateTask(
+                        binding.titleTask.text.toString(),
+                        binding.descriptionTask.text.toString(),
+                        fecha.text.toString(),
+                        hora.text.toString(),
+                        false,
+                        id)
                     NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAll()
                 }
             }
@@ -88,7 +96,7 @@ class CreateTask : Fragment() {
 
     private fun showTimePikerDialog() {
         val newFragment = TimePicker {onTimeSelected(it)}
-        //newFragment.show(supportFragmentManager, "timePicker")
+        activity?.let { newFragment.show(it.supportFragmentManager, "timePicker") }
     }
 
     private fun onTimeSelected(time: String) {
@@ -97,7 +105,7 @@ class CreateTask : Fragment() {
 
     private fun showDatePickerDialog() {
         val newFragment = DatePicker {day, month, year -> onDateSelected(day, month, year)}
-        //newFragment.show(supportFragmentManager, "datePicker")
+        activity?.let { newFragment.show(it.supportFragmentManager, "datePicker") }
     }
 
     @SuppressLint("SetTextI18n")
