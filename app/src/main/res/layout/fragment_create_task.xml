@@ -9,16 +9,16 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/titleT"
-            android:layout_width="412dp"
+            android:id="@+id/titleTask"
+            android:layout_width="380dp"
             android:layout_height="65dp"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="21dp"
+            android:layout_marginBottom="23dp"
             android:hint="@string/titulo"
             android:importantForAutofill="no"
             android:inputType="text"
             android:maxLines="2"
-            app:layout_constraintBottom_toTopOf="@+id/descriptionT"
+            app:layout_constraintBottom_toTopOf="@+id/descriptionTask"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/saveT"
+            android:id="@+id/saveTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -46,10 +46,11 @@
             android:backgroundTint="#CDDC39"
             android:text="@string/guardar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/btnCancelT"
+            android:id="@+id/cancelTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -57,42 +58,81 @@
             android:backgroundTint="#FF5722"
             android:text="@string/cancelar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/saveT" />
+            app:layout_constraintStart_toEndOf="@+id/saveTask"
+            tools:ignore="TextContrastCheck" />
 
         <EditText
-            android:id="@+id/descriptionT"
-            android:layout_width="374dp"
+            android:id="@+id/descriptionTask"
+            android:layout_width="382dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="43dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/descripcion"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/date"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleT" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginBottom="413dp"
-            android:text="@string/fecha_inicio"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descriptionT" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:text="@string/fecha_fin"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="34dp"
+            android:text="@string/fecha"
+            app:layout_constraintBottom_toTopOf="@+id/hour"
+            app:layout_constraintEnd_toStartOf="@+id/txtDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTask" />
+
+        <Button
+            android:id="@+id/hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="238dp"
+            android:text="@string/hora"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtHour"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date" />
+
+        <EditText
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/date"
+            app:layout_constraintTop_toTopOf="@+id/date"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <EditText
+            android:id="@+id/txtHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/hour"
+            app:layout_constraintTop_toTopOf="@+id/hour"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,15 +6,15 @@ import androidx.room.PrimaryKey
 @Entity
 data class Note (
     @PrimaryKey(autoGenerate = true)
-    val id : Int,
+    val id: Int,
+    val type: Int,
     val title: String,
     val description: String,
-    val type: Int,
-    val date: String,
-    val hour: String,
+    val dateCreation: String,
+    val dateEnd: String,
+    val hourEnd: String,
     val completed : Boolean
-)
-{
-    constructor(title: String, description: String, type: Int,date: String,hour: String, completed: Boolean)
-            : this(0, title, description, type,date,hour, completed)
+) {
+    constructor(type: Int, title: String, description: String, dateCreation: String, dateEnd: String, hourEnd: String, completed: Boolean)
+            : this(0, type, title, description, dateCreation, dateEnd, hourEnd, completed)
 }

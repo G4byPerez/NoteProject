@@ -12,4 +12,6 @@
     <string name="type">Type</string>
     <string name="fecha_inicio">Fecha Inicio</string>
     <string name="fecha_fin">Fecha Fin</string>
+    <string name="hora">Hora</string>
+    <string name="fecha">Fecha</string>
 </resources>

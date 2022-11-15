@@ -1,5 +1,6 @@
 package com.gabyperez.notes
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,20 +30,25 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
-
         return ViewHolder(v)
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p = notes[position]
-        holder.noteType.text = "Nota"
+
         holder.title.text = p.title
+        if (p.type == 1){
+            holder.noteType.text = "Nota"
+        } else {
+            holder.noteType.text = "Tarea"
+        }
 
         //delete
         holder.delete.setOnClickListener {
             NoteDatabase.getDatabase(holder.title.context).NoteDao().deleteNote(p)
-            val notes  = NoteDatabase.getDatabase(holder.title.context).NoteDao().getAllNotes()
+            val notes  = NoteDatabase.getDatabase(holder.title.context).NoteDao().getAll()
             this.notes = notes
             this.notifyItemRemoved(position)
         }
@@ -57,7 +63,6 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
             it.findNavController().navigate(R.id.action_home2_to_createNote,bundle)
         }
     }
-
 
     override fun getItemCount(): Int {
         return notes.size
