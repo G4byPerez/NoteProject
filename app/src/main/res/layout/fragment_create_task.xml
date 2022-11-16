@@ -23,20 +23,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButtonT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="36dp"
-            android:clickable="true"
-            android:contentDescription="@string/clip"
-            android:focusable="true"
-            android:src="@drawable/clip"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="SpeakableTextPresentCheck" />
-
         <Button
             android:id="@+id/saveTask"
             android:layout_width="wrap_content"
@@ -133,6 +119,51 @@
             app:layout_constraintStart_toEndOf="@+id/hour"
             app:layout_constraintTop_toTopOf="@+id/hour"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/grupoFlotanteT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            app:fab_addButtonColorNormal="@color/purple_200"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnAudioT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#C9B8F1"
+                app:fab_icon="@drawable/microfono"
+                app:fab_size="mini" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnFotoT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#C9B8F1"
+                app:fab_icon="@drawable/camara_24"
+                app:fab_size="mini" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnVideoT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#C9B8F1"
+                app:fab_icon="@drawable/video"
+                app:fab_size="mini" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnArchivoT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#C9B8F1"
+                app:fab_icon="@drawable/archivos"
+                app:fab_size="mini" />
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
