@@ -25,6 +25,12 @@
         <action
             android:id="@+id/action_createNote_to_home2"
             app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_createNote_to_photoFragment"
+            app:destination="@id/photoFragment" />
+        <action
+            android:id="@+id/action_createNote_to_videoFragment"
+            app:destination="@id/videoFragment" />
     </fragment>
     <fragment
         android:id="@+id/createTask"
@@ -34,5 +40,35 @@
         <action
             android:id="@+id/action_createTask_to_home2"
             app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_createTask_to_photoFragment"
+            app:destination="@id/photoFragment" />
+        <action
+            android:id="@+id/action_createTask_to_videoFragment"
+            app:destination="@id/videoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.gabyperez.notes.PhotoFragment"
+        android:label="fragment_photo"
+        tools:layout="@layout/fragment_photo" >
+        <action
+            android:id="@+id/action_photoFragment_to_createNote"
+            app:destination="@id/createNote" />
+        <action
+            android:id="@+id/action_photoFragment_to_createTask"
+            app:destination="@id/createTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.gabyperez.notes.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" >
+        <action
+            android:id="@+id/action_videoFragment_to_createNote"
+            app:destination="@id/createNote" />
+        <action
+            android:id="@+id/action_videoFragment_to_createTask"
+            app:destination="@id/createTask" />
     </fragment>
 </navigation>

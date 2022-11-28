@@ -29,6 +29,14 @@ class CreateNote : Fragment() {
             id = arguments?.getString("id")!!.toInt()
         }
 
+        binding.btnFotoN.setOnClickListener {
+            it.findNavController().navigate(R.id.action_createNote_to_photoFragment)
+        }
+
+        binding.btnVideoN.setOnClickListener {
+            it.findNavController().navigate(R.id.action_createNote_to_videoFragment)
+        }
+
         binding.save.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("title", binding.title.text.toString())

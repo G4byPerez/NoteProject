@@ -14,4 +14,7 @@
     <string name="fecha_fin">Fecha Fin</string>
     <string name="hora">Hora</string>
     <string name="fecha">Fecha</string>
+    <string name="photo">photo</string>
+    <string name="tomar_foto">Tomar Foto</string>
+    <string name="tomar_video">Tomar video</string>
 </resources>

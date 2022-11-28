@@ -17,14 +17,18 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
     class ViewHolder(v : View) : RecyclerView.ViewHolder(v){
         var noteType : TextView
         var title : TextView
+        var description: TextView
         var delete: ImageView
         var edit: ImageView
+        //var card: cardView
 
         init{
             noteType = v.findViewById(R.id.txtTipo)
-            title = v.findViewById(R.id.txtDescripcion)
+            title = v.findViewById(R.id.txtTitle)
+            description = v.findViewById(R.id.txtDescripcion)
             delete = v.findViewById(R.id.delete)
             edit = v.findViewById(R.id.edit)
+            //card = v.findViewById(R.id.cardView)
         }
     }
 
@@ -39,6 +43,8 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
         val p = notes[position]
 
         holder.title.text = p.title
+        holder.description.text = p.description
+
         if (p.type == 1){
             holder.noteType.text = "Nota"
         } else {
