@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-files-path name="my_images"
         path="Android/data/com.gabyperez.notes/files/Pictures" />
@@ -7,7 +6,6 @@
         name="mis_archivos"
         path="/"/>
 =======
-<paths>
 
     <files-path
         name="photos"
