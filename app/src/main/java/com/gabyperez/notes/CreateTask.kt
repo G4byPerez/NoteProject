@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,7 +74,10 @@ class CreateTask : Fragment() {
             bundle.putString("title", binding.titleTask.text.toString())
             bundle.putString("description", binding.descriptionTask.text.toString())
             parentFragmentManager.setFragmentResult("key", bundle)
-
+            //Channel
+            createNotificationChannel()
+            //Notification
+            scheduleNotificaction(binding.titleTask.text.toString())
             //Insert
             lifecycleScope.launch {
                 if (id == -1) {
@@ -91,10 +95,6 @@ class CreateTask : Fragment() {
                         .insert(newTask)
                     NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao()
                         .getAll()
-                    //Channel
-                    createNotificationChannel()
-                    //Notification
-                    scheduleNotificaction(binding.titleTask.text.toString())
                 } else {
                     //update note
                     NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao()
@@ -166,20 +166,20 @@ class CreateTask : Fragment() {
         intent.putExtra(titleExtra, title)
         intent.putExtra(messageExtra, message)
 
+        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             notificationID,
             intent,
-            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_UPDATE_CURRENT
+            0
         )
 
-        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
        // val time = getTime()
-       // val time = 180000
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
+        alarmManager.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
             //time,
-            180000,
+            SystemClock.elapsedRealtime() + 10 * 1000,
             pendingIntent
         )
     }

@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 
 
-const val notificationID = 1
+const val notificationID = 1001
 const val channelID = "channel1"
 const val titleExtra =  "TitleExtra"
 const val messageExtra = "messageExtra"
