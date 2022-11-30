@@ -14,4 +14,9 @@
     <string name="fecha_fin">Fecha Fin</string>
     <string name="hora">Hora</string>
     <string name="fecha">Fecha</string>
+    <string name="grabar_audio">Grabar Audio</string>
+    <string name="audio_onda">Onda de audio</string>
+    <string name="start_recording">Start recording</string>
+    <string name="salir">Salir</string>
+    <string name="recordatorio_listo">Recordatorio listo</string>
 </resources>

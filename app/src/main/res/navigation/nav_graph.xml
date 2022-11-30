@@ -34,5 +34,17 @@
         <action
             android:id="@+id/action_createTask_to_home2"
             app:destination="@id/home2" />
+        <action
+            android:id="@+id/action_createTask_to_audio"
+            app:destination="@id/audio" />
+    </fragment>
+    <fragment
+        android:id="@+id/audio"
+        android:name="com.gabyperez.notes.Audio"
+        android:label="fragment_audio"
+        tools:layout="@layout/fragment_audio" >
+        <action
+            android:id="@+id/action_audio_to_createTask"
+            app:destination="@id/createTask" />
     </fragment>
 </navigation>
