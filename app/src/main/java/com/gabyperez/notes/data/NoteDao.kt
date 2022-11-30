@@ -9,7 +9,7 @@ import com.gabyperez.notes.model.Note
 @Dao
 interface NoteDao {
     @Insert
-    fun insert(note: Note)
+    fun insert(note: Note): Long
 
     @Query("SELECT * FROM Note ORDER BY dateCreation DESC")
     fun getAll(): List<Note>

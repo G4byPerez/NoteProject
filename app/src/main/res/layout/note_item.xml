@@ -1,35 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100sp">
+    android:layout_height="120sp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="370sp"
-        android:layout_height="73dp"
+        android:layout_height="95dp"
         android:layout_margin="10sp"
         android:elevation="5sp"
+        app:cardBackgroundColor="#FDF8CC"
         app:cardCornerRadius="15sp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/type"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="23dp"
-                android:layout_marginBottom="23dp"
-                android:contentDescription="@string/type"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/presence_online"
-                tools:ignore="ImageContrastCheck" />
+            android:layout_height="100sp">
 
             <ImageView
                 android:id="@+id/delete"
@@ -46,20 +32,24 @@
 
             <TextView
                 android:id="@+id/txtTipo"
-                android:layout_width="wrap_content"
+                android:layout_width="350sp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="1dp"
                 android:maxLength="40"
                 android:paddingStart="10sp"
                 android:paddingLeft="10sp"
                 android:paddingTop="10sp"
                 android:paddingEnd="10sp"
                 android:paddingRight="10sp"
-                android:text="@string/titulo"
+                android:text="@string/type"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/type"
+                app:layout_constraintBottom_toTopOf="@+id/txtTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -76,11 +66,31 @@
                 app:srcCompat="@drawable/edit" />
 
             <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="1dp"
+                android:maxLength="80"
+                android:paddingStart="10sp"
+                android:paddingLeft="10sp"
+                android:paddingTop="5sp"
+                android:paddingEnd="10sp"
+                android:paddingRight="10sp"
+                android:paddingBottom="5sp"
+                android:text="@string/titulo"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toTopOf="@+id/txtDescripcion"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTipo" />
+
+            <TextView
                 android:id="@+id/txtDescripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="15dp"
                 android:maxLength="80"
                 android:paddingStart="10sp"
                 android:paddingLeft="10sp"
@@ -91,8 +101,9 @@
                 android:text="@string/descripcion"
                 android:textColor="@color/black"
                 android:textSize="13sp"
-                app:layout_constraintStart_toEndOf="@+id/type"
-                app:layout_constraintTop_toBottomOf="@+id/txtTipo" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
