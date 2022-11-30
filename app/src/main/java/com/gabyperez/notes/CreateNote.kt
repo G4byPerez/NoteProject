@@ -38,7 +38,7 @@ class CreateNote : Fragment() {
         }
 
         binding.btnAudioN.setOnClickListener {
-            it.findNavController().navigate(R.id.action_createTask_to_audio,bundle)
+            it.findNavController().navigate(R.id.action_createNote_to_audio,bundle)
         }
 
         binding.btnVideoN.setOnClickListener {

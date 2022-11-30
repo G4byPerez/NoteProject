@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentAudioBinding
+import com.gabyperez.notes.model.Multimedia
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import java.io.IOException
@@ -24,12 +24,11 @@ import java.util.Date
 private const val LOG_TAG = "AudioRecordTest"
 class Audio : Fragment(){
 
-    lateinit var requestPermissionLauncher:ActivityResultLauncher<String>
     private var mStartRecording: Boolean = true
     private var fileName: String = ""
     private var recorder: MediaRecorder? = null
     private var player: MediaPlayer? = null
-    lateinit var miContexto: Context
+    private lateinit var miContexto: Context
 
     // Requesting permission to RECORD_AUDIO
     override fun onAttach(context: Context) {
@@ -42,19 +41,29 @@ class Audio : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAudioBinding.inflate(layoutInflater)
-        iniPerm()
+        //iniPerm()
         binding.btnStart.setOnClickListener {
-            grabar()
-            onRecord(mStartRecording)
-            mStartRecording = !mStartRecording
+            //grabar()
+            revisarPermisos()
+            //onRecord(mStartRecording)
+            //mStartRecording = !mStartRecording
         }
 
         binding.btnStop.setOnClickListener {
             onPlay(mStartPlaying)
             mStartPlaying = !mStartPlaying
         }
+
        binding.btnGuardar.setOnClickListener{
-           it.findNavController().navigate(R.id.action_audio_to_createTask)
+           val file = Multimedia (
+               arguments?.getString("id")!!.toInt(),
+               "audio",
+               fileName,
+               binding.txtDescripcionNota.text.toString()
+           )
+           //Insert
+           NoteDatabase.getDatabase(requireActivity().applicationContext).MultimediaDao().insert(file)
+           //it.findNavController().navigate(R.id.action_audio_to_createTask)
        }
         return binding.root
     }
@@ -82,36 +91,15 @@ class Audio : Fragment(){
         }
     }
 
-    var mStartPlaying = true
+    private var mStartPlaying = true
 
 
     private fun onRecord(start: Boolean) = if (start) {
-        iniciarGraabacion()
+        iniciarGrabacion()
     } else {
         stopRecording()
     }
 
-    private fun iniPerm(){
-        requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // Permission is granted. Continue the action or workflow in your
-                    // app.
-                } else {
-                    // Explain to the user that the feature is unavailable because the
-                    // features requires a permission that the user has denied. At the
-                    // same time, respect the user's decision. Don't link to system
-                    // settings in an effort to convince the user to change their
-                    // decision.
-                }
-            }
-    }
-
-    private fun grabar() {
-        revisarPermisos()
-    }
 
     private fun revisarPermisos() {
         when {
@@ -119,16 +107,17 @@ class Audio : Fragment(){
                 miContexto,
                 "android.permission.RECORD_AUDIO"
             ) == PackageManager.PERMISSION_GRANTED -> {
-
+                onRecord(mStartRecording)
+                mStartRecording = !mStartRecording
             }
             shouldShowRequestPermissionRationale("android.permission.RECORD_AUDIO") -> {
                 MaterialAlertDialogBuilder( miContexto
                 )
                     .setTitle("Title")
                     .setMessage("Debes dar perimso para grabar audios")
-                    .setNegativeButton("Cancel") { dialog, which ->
+                    .setNegativeButton("Cancel") { _, _ ->
                     }
-                    .setPositiveButton("OK") { dialog, which ->
+                    .setPositiveButton("OK") { _, _ ->
 
                         requestPermissions(
                             arrayOf("android.permission.RECORD_AUDIO",
@@ -161,7 +150,8 @@ class Audio : Fragment(){
                             grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                             grantResults[1] == PackageManager.PERMISSION_GRANTED
                             )) {
-                    iniciarGraabacion()
+                    onRecord(mStartRecording)
+                    mStartRecording = !mStartRecording
                 } else {
 
                 }
@@ -172,7 +162,7 @@ class Audio : Fragment(){
         }
     }
 
-    private fun iniciarGraabacion() {
+    private fun iniciarGrabacion() {
         recorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
