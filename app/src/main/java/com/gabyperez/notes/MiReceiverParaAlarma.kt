@@ -21,7 +21,7 @@ const val messageExtra = "messageExtra"
 class MiReceiverParaAlarma : BroadcastReceiver () {
     override fun onReceive(context : Context, intent : Intent) {
      val notification = NotificationCompat.Builder(context, channelID)
-         .setSmallIcon(R.drawable.btn_minus)
+         .setSmallIcon(R.drawable.alert_dark_frame)
          .setContentTitle(intent.getStringExtra(titleExtra))
          .setContentText(intent.getStringExtra(messageExtra))
          .build()
