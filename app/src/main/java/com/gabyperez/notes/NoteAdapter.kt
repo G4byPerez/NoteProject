@@ -1,12 +1,14 @@
 package com.gabyperez.notes
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.gabyperez.notes.data.NoteDatabase
@@ -20,7 +22,7 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
         var description: TextView
         var delete: ImageView
         var edit: ImageView
-        //var card: cardView
+        var card: CardView
 
         init{
             noteType = v.findViewById(R.id.txtTipo)
@@ -28,7 +30,7 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
             description = v.findViewById(R.id.txtDescripcion)
             delete = v.findViewById(R.id.delete)
             edit = v.findViewById(R.id.edit)
-            //card = v.findViewById(R.id.cardView)
+            card = v.findViewById(R.id.cardView)
         }
     }
 
@@ -47,8 +49,10 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
 
         if (p.type == 1){
             holder.noteType.text = "Nota"
+            holder.card.setCardBackgroundColor(Color.parseColor("#DBF4FF"))
         } else {
             holder.noteType.text = "Tarea"
+            //holder.card.setCardBackgroundColor(Color.parseColor("#FDDBE7"))
         }
 
         //delete
@@ -60,7 +64,7 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
         }
 
         //edit
-        holder.edit.setOnClickListener {
+        holder.card.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("id",p.id.toString())
             bundle.putString("title", p.title)

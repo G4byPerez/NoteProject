@@ -10,7 +10,7 @@
         android:layout_height="95dp"
         android:layout_margin="10sp"
         android:elevation="5sp"
-        app:cardBackgroundColor="#FDF8CC"
+        app:cardBackgroundColor="#FDDBE7"
         app:cardCornerRadius="15sp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

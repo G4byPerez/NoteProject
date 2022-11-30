@@ -13,8 +13,8 @@ data class Note (
     val dateCreation: String,
     val dateEnd: String,
     val hourEnd: String,
-    val completed : Boolean
+    val completed: Int
 ) {
-    constructor(type: Int, title: String, description: String, dateCreation: String, dateEnd: String, hourEnd: String, completed: Boolean)
+    constructor(type: Int, title: String, description: String, dateCreation: String, dateEnd: String, hourEnd: String, completed: Int)
             : this(0, type, title, description, dateCreation, dateEnd, hourEnd, completed)
 }

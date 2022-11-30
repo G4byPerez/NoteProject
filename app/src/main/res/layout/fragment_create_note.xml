@@ -97,16 +97,19 @@
                 app:fab_icon="@drawable/video"
                 app:fab_size="mini" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnArchivoN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#C9B8F1"
-                app:fab_icon="@drawable/archivos"
-                app:fab_size="mini" />
-
-
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+        <Button
+            android:id="@+id/multimedia"
+            android:layout_width="240sp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="279dp"
+            android:text="@string/ver_multimedia"
+            app:layout_constraintBottom_toTopOf="@+id/save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

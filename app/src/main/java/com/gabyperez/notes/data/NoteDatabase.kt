@@ -10,6 +10,7 @@ import com.gabyperez.notes.model.Note
 @Database(entities = [Note::class, Multimedia::class], version = 1, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase(){
     abstract fun NoteDao(): NoteDao
+    abstract fun MultimediaDao(): MultimediaDao
 
     companion object {
         private var INSTANCE: NoteDatabase? = null

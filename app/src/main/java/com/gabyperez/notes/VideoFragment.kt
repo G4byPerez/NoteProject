@@ -18,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.findNavController
+import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentVideoBinding
+import com.gabyperez.notes.model.Multimedia
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -43,12 +45,20 @@ class VideoFragment : Fragment() {
         binding = FragmentVideoBinding.inflate(layoutInflater)
 
         binding.takeVideo.setOnClickListener {
-            //tomarVideo()
             validarPermisos()
         }
 
         binding.saveVideo.setOnClickListener {
-            it.findNavController().navigate(R.id.action_videoFragment_to_createNote)
+            val file = Multimedia (
+                arguments?.getString("id")!!.toInt(),
+                "video",
+                videoURI.toString(),
+                binding.description.text.toString()
+            )
+            //Insert
+            NoteDatabase.getDatabase(requireActivity().applicationContext).MultimediaDao().insert(file)
+            //Navigation
+            //it.findNavController().navigate(R.id.action_videoFragment_to_createNote)
         }
 
         mediaController = MediaController(miContext)

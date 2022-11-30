@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.navigation.findNavController
+import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentPhotoBinding
+import com.gabyperez.notes.model.Multimedia
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -41,12 +42,18 @@ class PhotoFragment : Fragment() {
         binding = FragmentPhotoBinding.inflate(layoutInflater)
 
         binding.takePhoto.setOnClickListener {
-            //dispatchTakePictureIntent()
             validarPermisos()
         }
 
         binding.savePhoto.setOnClickListener {
-            it.findNavController().navigate(R.id.action_photoFragment_to_createNote)
+            val file = Multimedia (
+                arguments?.getString("id")!!.toInt(),
+                "photo",
+                photoURI.toString(),
+                binding.description.text.toString()
+            )
+            //Insert
+            NoteDatabase.getDatabase(requireActivity().applicationContext).MultimediaDao().insert(file)
         }
 
         return binding.root
@@ -58,7 +65,6 @@ class PhotoFragment : Fragment() {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = activity?.getExternalFilesDir(null)
-            //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */

@@ -22,4 +22,8 @@
     <string name="start_recording">Start recording</string>
     <string name="salir">Salir</string>
     <string name="recordatorio_listo">Recordatorio listo</string>
+    <string name="ver_multimedia">Ver multimedia</string>
+    <string name="volver">Volver</string>
+    <string name="establecer_recordatorio">Establecer recordatorio</string>
+    <string name="eliminar">Eliminar</string>
 </resources>

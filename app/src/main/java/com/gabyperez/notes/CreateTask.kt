@@ -14,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -23,15 +22,14 @@ import androidx.navigation.findNavController
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentCreateTaskBinding
 import com.gabyperez.notes.model.Note
-import com.getbase.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateTask : Fragment() {
 
     private lateinit var fecha: EditText
     private lateinit var hora: EditText
-    private lateinit var btnAudio: FloatingActionButton
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -46,68 +44,105 @@ class CreateTask : Fragment() {
         fecha = binding.txtDate
         hora = binding.txtHour
 
-        //edit
         var id = -1
-        if (arguments?.getString("title") != null) {
+        val bundle = Bundle()
+        val currentTime = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        //edit
+        if(arguments?.getString("title") != null) {
             binding.titleTask.setText(arguments?.getString("title"))
             binding.descriptionTask.setText(arguments?.getString("description"))
             binding.txtDate.setText(arguments?.getString("dateEnd"))
             binding.txtHour.setText(arguments?.getString("hourEnd"))
             id = arguments?.getString("id")!!.toInt()
+            bundle.putString("id", id.toString())
+            val completed = arguments?.getInt("completed")
+
+            binding.checkBox.isChecked = completed == 0
+            if (binding.checkBox.isChecked) {
+                binding.date.visibility = View.VISIBLE
+                binding.hour.visibility = View.VISIBLE
+                fecha.visibility = View.VISIBLE
+                hora.visibility = View.VISIBLE
+            }
+        }
+
+        //CheckBox
+        var flag = 0
+        binding.checkBox.setOnClickListener{
+            if (binding.checkBox.isChecked) {
+                binding.date.visibility = View.VISIBLE
+                binding.hour.visibility = View.VISIBLE
+                fecha.visibility = View.VISIBLE
+                hora.visibility = View.VISIBLE
+                flag = 1
+            } else {
+                binding.date.visibility = View.INVISIBLE
+                binding.date.text = ""
+                binding.hour.visibility = View.INVISIBLE
+                binding.hour.text = ("")
+                fecha.visibility = View.INVISIBLE
+                hora.visibility = View.INVISIBLE
+                flag = 0
+            }
         }
 
         //Navigation
+        binding.btnFotoT.setOnClickListener {
+            it.findNavController().navigate(R.id.action_createTask_to_photoFragment, bundle)
+        }
+
+        binding.btnVideoT.setOnClickListener {
+            it.findNavController().navigate(R.id.action_createTask_to_videoFragment, bundle)
+        }
+
+        binding.btnAudioT.setOnClickListener {
+            it.findNavController().navigate(R.id.action_createTask_to_audio, bundle)
+        }
+
+        binding.multimediaTask.setOnClickListener {
+            it.findNavController().navigate(R.id.action_createTask_to_viewMultimediaFragment, bundle)
+        }
+
         binding.cancelTask.setOnClickListener {
             it.findNavController().navigate(R.id.action_createTask_to_home2)
         }
-
-        //Grupo de botones
-        btnAudio = binding.btnAudioT
-        btnAudio.setOnClickListener {
-            it.findNavController().navigate(R.id.action_createTask_to_audio)
-        }
-
-
 
         binding.saveTask.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("title", binding.titleTask.text.toString())
             bundle.putString("description", binding.descriptionTask.text.toString())
-            parentFragmentManager.setFragmentResult("key", bundle)
-            //Channel
-            createNotificationChannel()
+            parentFragmentManager.setFragmentResult("key",bundle)
+
             //Notification
+            createNotificationChannel()
             scheduleNotificaction(binding.titleTask.text.toString())
+
             //Insert
-            lifecycleScope.launch {
-                if (id == -1) {
+            lifecycleScope.launch{
+                if (id == -1){
                     //insert new task --> type=2
                     val newTask = Note(
                         2,
                         binding.titleTask.text.toString(),
                         binding.descriptionTask.text.toString(),
-                        "",
+                        currentTime,
                         fecha.text.toString(),
                         hora.text.toString(),
-                        false
-                    )
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao()
-                        .insert(newTask)
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao()
-                        .getAll()
+                        flag)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().insert(newTask)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAll()
                 } else {
                     //update note
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao()
-                        .updateTask(
-                            binding.titleTask.text.toString(),
-                            binding.descriptionTask.text.toString(),
-                            fecha.text.toString(),
-                            hora.text.toString(),
-                            false,
-                            id
-                        )
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao()
-                        .getAll()
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().
+                    updateTask(
+                        binding.titleTask.text.toString(),
+                        binding.descriptionTask.text.toString(),
+                        currentTime,
+                        fecha.text.toString(),
+                        hora.text.toString(),
+                        flag,
+                        id)
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAll()
                 }
             }
             //Navigation
@@ -161,9 +196,8 @@ class CreateTask : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun scheduleNotificaction(titulo: String) {
         val intent = Intent(context, MiReceiverParaAlarma::class.java)
-        val title = titulo
         val message = "Tienes esta tarea pendiente"
-        intent.putExtra(titleExtra, title)
+        intent.putExtra(titleExtra, titulo)
         intent.putExtra(messageExtra, message)
 
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -183,8 +217,6 @@ class CreateTask : Fragment() {
             pendingIntent
         )
     }
-
-
 
     private fun getTime(): Long{
      val minute = hora.text.toString().substring(3,4).toInt()

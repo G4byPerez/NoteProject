@@ -26,11 +26,11 @@ interface NoteDao {
     @Query("SELECT * FROM Note WHERE title LIKE :title AND type=:type OR description LIKE :description AND type=:type")
     fun getByTitleDescription(title: String, description: String, type:Int) : List<Note>
 
-    @Query("UPDATE Note set title = :title, description = :description, dateEnd = :date, hourEnd = :hour, completed = :completed WHERE id = :id")
-    fun updateTask(title: String, description: String, date: String, hour: String, completed: Boolean, id: Int)
+    @Query("UPDATE Note set title=:title, description=:description, dateCreation=:dateC, dateEnd=:date, hourEnd=:hour, completed=:completed WHERE id=:id")
+    fun updateTask(title: String, description: String, dateC:String, date: String, hour: String, completed: Int, id: Int)
 
-    @Query("UPDATE Note set title = :title, description = :description WHERE id = :id")
-    fun updateNote(title: String, description:String, id: Int)
+    @Query("UPDATE Note SET title=:title, description=:description, dateCreation=:date WHERE id = :id")
+    fun updateNote(title: String, description:String, date:String, id: Int)
 
     @Delete
     fun deleteNote(note: Note)

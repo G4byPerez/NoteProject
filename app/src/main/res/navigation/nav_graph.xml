@@ -31,6 +31,12 @@
         <action
             android:id="@+id/action_createNote_to_videoFragment"
             app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_createNote_to_viewMultimediaFragment"
+            app:destination="@id/viewMultimediaFragment" />
+        <action
+            android:id="@+id/action_createNote_to_audio"
+            app:destination="@id/audio" />
     </fragment>
     <fragment
         android:id="@+id/createTask"
@@ -43,6 +49,17 @@
         <action
             android:id="@+id/action_createTask_to_audio"
             app:destination="@id/audio" />
+            android:id="@+id/action_createTask_to_photoFragment"
+            app:destination="@id/photoFragment" />
+        <action
+            android:id="@+id/action_createTask_to_videoFragment"
+            app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_createTask_to_viewMultimediaFragment"
+            app:destination="@id/viewMultimediaFragment" />
+        <action
+            android:id="@+id/action_createTask_to_photoFragment"
+            app:destination="@id/photoFragment" />
     </fragment>
     <fragment
         android:id="@+id/audio"
@@ -52,6 +69,9 @@
         <action
             android:id="@+id/action_audio_to_createTask"
             app:destination="@id/createTask" />
+        <action
+            android:id="@+id/action_audio_to_createNote"
+            app:destination="@id/createNote" />
     </fragment>
     <fragment
         android:id="@+id/videoFragment"
@@ -71,4 +91,32 @@
             android:id="@+id/action_photoFragment_to_createNote"
             app:destination="@id/createNote" />
     </fragment>
+    <fragment
+        android:id="@+id/viewMultimediaFragment"
+        android:name="com.gabyperez.notes.ViewMultimediaFragment"
+        android:label="fragment_view_multimedia"
+        tools:layout="@layout/fragment_view_multimedia" >
+        <action
+            android:id="@+id/action_viewMultimediaFragment_to_createTask"
+            app:destination="@id/createTask" />
+        <action
+            android:id="@+id/action_viewMultimediaFragment_to_createNote"
+            app:destination="@id/createNote" />
+        <action
+            android:id="@+id/action_viewMultimediaFragment_to_viewPhotoFragment"
+            app:destination="@id/viewPhotoFragment" />
+        <action
+            android:id="@+id/action_viewMultimediaFragment_to_viewVideoFragment"
+            app:destination="@id/viewVideoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPhotoFragment"
+        android:name="com.gabyperez.notes.ViewPhotoFragment"
+        android:label="fragment_view_photo"
+        tools:layout="@layout/fragment_view_photo" />
+    <fragment
+        android:id="@+id/viewVideoFragment"
+        android:name="com.gabyperez.notes.ViewVideoFragment"
+        android:label="fragment_view_video"
+        tools:layout="@layout/fragment_view_video" />
 </navigation>
