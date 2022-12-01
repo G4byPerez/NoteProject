@@ -180,7 +180,7 @@ class CreateTask : Fragment() {
         fecha.setText("$day/$month/$year")
     }
 
-    // Notificacion
+    // Notification
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
         val name = "Notif Channel"

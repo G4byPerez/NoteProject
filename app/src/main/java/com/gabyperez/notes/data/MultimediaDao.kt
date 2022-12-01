@@ -1,6 +1,7 @@
 package com.gabyperez.notes.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.gabyperez.notes.model.Multimedia
@@ -12,4 +13,7 @@ interface MultimediaDao {
 
     @Query("SELECT * FROM multimedia WHERE idNote=:idNote")
     fun getMultimedia(idNote: Int): List<Multimedia>
+
+    @Delete
+    fun delete(multimedia: Multimedia)
 }

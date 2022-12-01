@@ -50,7 +50,6 @@ class CreateNote : Fragment() {
         }
 
         binding.save.setOnClickListener {
-            val bundle = Bundle()
             bundle.putString("title", binding.title.text.toString())
             bundle.putString("description", binding.description.text.toString())
             parentFragmentManager.setFragmentResult("key",bundle)

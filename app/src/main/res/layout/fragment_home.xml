@@ -10,11 +10,16 @@
 
         <EditText
             android:id="@+id/search"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:autofillHints=""
             android:ems="10"
+            android:hint="@string/buscar_por_titulo"
+            android:inputType="text"
+            android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
@@ -70,6 +75,20 @@
                 app:fab_size="mini" />
 
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/photo"
+            android:src="@drawable/buscar"
+            app:layout_constraintEnd_toStartOf="@+id/search"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

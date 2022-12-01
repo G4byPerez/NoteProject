@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.navigation.findNavController
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentPhotoBinding
 import com.gabyperez.notes.model.Multimedia
@@ -54,6 +53,10 @@ class PhotoFragment : Fragment() {
             )
             //Insert
             NoteDatabase.getDatabase(requireActivity().applicationContext).MultimediaDao().insert(file)
+
+            binding.savePhoto.visibility = View.INVISIBLE
+            binding.takePhoto.visibility = View.INVISIBLE
+            binding.description.isEnabled = false
         }
 
         return binding.root

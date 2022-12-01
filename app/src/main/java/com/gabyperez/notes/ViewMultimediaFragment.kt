@@ -33,7 +33,6 @@ class ViewMultimediaFragment : Fragment() {
         rv.adapter = MultimediaAdapter(multimedia)
         rv.layoutManager = LinearLayoutManager(this@ViewMultimediaFragment.requireContext())
 
-
         return root.rootView
     }
 

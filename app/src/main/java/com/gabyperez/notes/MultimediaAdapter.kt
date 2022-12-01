@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.model.Multimedia
 
 class MultimediaAdapter (var multimedia: List<Multimedia>): RecyclerView.Adapter<MultimediaAdapter.ViewHolder>(){
@@ -18,11 +19,13 @@ class MultimediaAdapter (var multimedia: List<Multimedia>): RecyclerView.Adapter
         var description: TextView
         var image: ImageView
         var card: CardView
+        var delete: ImageView
 
         init {
             description = v.findViewById(R.id.descriptionM)
             image = v.findViewById(R.id.imageViewM)
             card = v.findViewById(R.id.cardViewM)
+            delete = v.findViewById(R.id.delete)
         }
     }
 
@@ -30,7 +33,6 @@ class MultimediaAdapter (var multimedia: List<Multimedia>): RecyclerView.Adapter
         val v = LayoutInflater.from(parent.context).inflate(R.layout.multimedia_item, parent, false)
         return ViewHolder(v)
     }
-
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -44,16 +46,30 @@ class MultimediaAdapter (var multimedia: List<Multimedia>): RecyclerView.Adapter
         }
 
         holder.card.setOnClickListener {
-            var bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString("id",m.id.toString())
             bundle.putString("path",m.path)
             bundle.putString("description",m.description)
 
-            if (m.type == "photo") {
-                it.findNavController().navigate(R.id.action_viewMultimediaFragment_to_viewPhotoFragment, bundle)
-            } else if (m.type == "video") {
-                it.findNavController().navigate(R.id.action_viewMultimediaFragment_to_viewVideoFragment, bundle)
+            when (m.type) {
+                "photo" -> {
+                    it.findNavController().navigate(R.id.action_viewMultimediaFragment_to_viewPhotoFragment, bundle)
+                }
+                "video" -> {
+                    it.findNavController().navigate(R.id.action_viewMultimediaFragment_to_viewVideoFragment, bundle)
+                }
+                else -> {
+                    it.findNavController().navigate(R.id.action_viewMultimediaFragment_to_viewAudioFragment, bundle)
+                }
             }
+        }
+
+        val id = m.idNote
+        holder.delete.setOnClickListener {
+            NoteDatabase.getDatabase(holder.description.context).MultimediaDao().delete(m)
+            val notes  = NoteDatabase.getDatabase(holder.description.context).MultimediaDao().getMultimedia(id)
+            this.multimedia = notes
+            this.notifyItemRemoved(position)
         }
 
     }

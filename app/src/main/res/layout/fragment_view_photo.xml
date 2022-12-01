@@ -36,21 +36,9 @@
         android:hint="@string/descripcion"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
-        android:focusable="false"
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPhoto" />
 
-    <Button
-        android:id="@+id/deletePhoto"
-        android:layout_width="270sp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="99dp"
-        android:text="@string/eliminar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionVP" />
 </androidx.constraintlayout.widget.ConstraintLayout>

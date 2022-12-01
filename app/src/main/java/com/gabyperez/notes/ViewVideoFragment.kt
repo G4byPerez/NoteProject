@@ -19,6 +19,7 @@ class ViewVideoFragment : Fragment() {
         binding.viewVideo.setVideoURI(arguments?.getString("path").toString().toUri())
         binding.viewVideo.start()
         binding.descriptionVV.setText(arguments?.getString("description"))
+        binding.descriptionVV.isEnabled = false
 
         return binding.root
     }

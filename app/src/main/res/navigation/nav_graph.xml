@@ -108,6 +108,9 @@
         <action
             android:id="@+id/action_viewMultimediaFragment_to_viewVideoFragment"
             app:destination="@id/viewVideoFragment" />
+        <action
+            android:id="@+id/action_viewMultimediaFragment_to_viewAudioFragment"
+            app:destination="@id/viewAudioFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewPhotoFragment"
@@ -119,4 +122,13 @@
         android:name="com.gabyperez.notes.ViewVideoFragment"
         android:label="fragment_view_video"
         tools:layout="@layout/fragment_view_video" />
+    <fragment
+        android:id="@+id/viewAudioFragment"
+        android:name="com.gabyperez.notes.ViewAudioFragment"
+        android:label="fragment_view_audio"
+        tools:layout="@layout/fragment_view_audio" >
+        <action
+            android:id="@+id/action_viewAudioFragment_to_viewMultimediaFragment"
+            app:destination="@id/viewMultimediaFragment" />
+    </fragment>
 </navigation>

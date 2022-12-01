@@ -5,13 +5,11 @@ import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentAudioBinding
 import com.gabyperez.notes.model.Multimedia
@@ -21,7 +19,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 
-private const val LOG_TAG = "AudioRecordTest"
+//private const val LOG_TAG = "AudioRecordTest"
 class Audio : Fragment(){
 
     private var mStartRecording: Boolean = true
@@ -41,15 +39,13 @@ class Audio : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentAudioBinding.inflate(layoutInflater)
-        //iniPerm()
+
         binding.btnStart.setOnClickListener {
-            //grabar()
             revisarPermisos()
-            //onRecord(mStartRecording)
-            //mStartRecording = !mStartRecording
         }
 
         binding.btnStop.setOnClickListener {
+            stopRecording()
             onPlay(mStartPlaying)
             mStartPlaying = !mStartPlaying
         }
@@ -63,7 +59,11 @@ class Audio : Fragment(){
            )
            //Insert
            NoteDatabase.getDatabase(requireActivity().applicationContext).MultimediaDao().insert(file)
-           //it.findNavController().navigate(R.id.action_audio_to_createTask)
+
+           binding.btnStart.visibility = View.INVISIBLE
+           binding.btnStop.visibility = View.INVISIBLE
+           binding.btnGuardar.visibility = View.INVISIBLE
+           binding.txtDescripcionNota.isEnabled = false
        }
         return binding.root
     }
@@ -86,20 +86,18 @@ class Audio : Fragment(){
                 prepare()
                 start()
             } catch (e: IOException) {
-                Log.e(LOG_TAG, "prepare() failed")
+                //Log.e(LOG_TAG, "prepare() failed")
             }
         }
     }
 
     private var mStartPlaying = true
 
-
     private fun onRecord(start: Boolean) = if (start) {
         iniciarGrabacion()
     } else {
         stopRecording()
     }
-
 
     private fun revisarPermisos() {
         when {
@@ -172,7 +170,7 @@ class Audio : Fragment(){
             try {
                 prepare()
             } catch (e: IOException) {
-                Log.e(LOG_TAG, "prepare() failed")
+                //Log.e(LOG_TAG, "prepare() failed")
             }
             start()
         }
@@ -190,10 +188,7 @@ class Audio : Fragment(){
     fun createAudioFile(): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        /*val storageDir: File? =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)*/
         val storageDir: File? = activity?.getExternalFilesDir(null)
-        //val storageDir: File? = filesDir
         return File.createTempFile(
             "AUDIO_${timeStamp}_",
             ".mp3",

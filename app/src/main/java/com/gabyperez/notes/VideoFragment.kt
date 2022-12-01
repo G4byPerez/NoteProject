@@ -57,8 +57,10 @@ class VideoFragment : Fragment() {
             )
             //Insert
             NoteDatabase.getDatabase(requireActivity().applicationContext).MultimediaDao().insert(file)
-            //Navigation
-            //it.findNavController().navigate(R.id.action_videoFragment_to_createNote)
+
+            binding.saveVideo.visibility = View.INVISIBLE
+            binding.takeVideo.visibility = View.INVISIBLE
+            binding.description.isEnabled = false
         }
 
         mediaController = MediaController(miContext)
