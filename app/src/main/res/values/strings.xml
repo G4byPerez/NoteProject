@@ -26,4 +26,5 @@
     <string name="volver">Volver</string>
     <string name="establecer_recordatorio">Establecer recordatorio</string>
     <string name="eliminar">Eliminar</string>
+    <string name="buscar">buscar</string>
 </resources>

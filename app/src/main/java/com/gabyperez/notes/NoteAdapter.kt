@@ -1,11 +1,14 @@
 package com.gabyperez.notes
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -13,8 +16,9 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.model.Note
+import java.util.*
 
-class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.ViewHolder>(){
+class NoteAdapter ( var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.ViewHolder>(){
 
     class ViewHolder(v : View) : RecyclerView.ViewHolder(v){
         var noteType : TextView
@@ -72,7 +76,6 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
             bundle.putString("type", p.type.toString())
             bundle.putString("dateEnd", p.dateEnd)
             bundle.putString("hourEnd", p.hourEnd)
-
             //Navigation
             if (p.type == 1){
                 it.findNavController().navigate(R.id.action_home2_to_createNote,bundle)
@@ -87,3 +90,4 @@ class NoteAdapter (var notes: List<Note>): RecyclerView.Adapter<NoteAdapter.View
     }
 
 }
+
