@@ -49,8 +49,8 @@
 
         <EditText
             android:id="@+id/descriptionTask"
-            android:layout_width="382dp"
-            android:layout_height="200dp"
+            android:layout_width="384dp"
+            android:layout_height="94dp"
             android:layout_marginTop="120dp"
             android:layout_marginBottom="43dp"
             android:ems="10"
@@ -156,6 +156,14 @@
                 app:fab_icon="@drawable/video"
                 app:fab_size="mini" />
 
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnReminderT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#C9B8F1"
+                app:fab_icon="@android:drawable/ic_lock_idle_alarm"
+                app:fab_size="mini" />
+
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
         <Button
@@ -173,7 +181,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:text="@string/establecer_recordatorio"
+            android:text="@string/finTarea"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descriptionTask" />
 

@@ -110,6 +110,9 @@ class CreateTask : Fragment() {
             it.findNavController().navigate(R.id.action_createTask_to_home2)
         }
 
+        binding.btnReminderT.setOnClickListener{
+            it.findNavController().navigate(R.id.action_createTask_to_fragment_Reminders)
+        }
         binding.saveTask.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("title", binding.titleTask.text.toString())

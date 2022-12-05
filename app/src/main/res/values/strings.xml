@@ -30,4 +30,5 @@
     <string name="buscar_por_titulo">Buscar por titulo</string>
     <string name="seleccionar_foto">Seleccionar foto</string>
     <string name="seleccionar_video">Seleccionar video</string>
+    <string name="finTarea">Fecha Límite</string>
 </resources>

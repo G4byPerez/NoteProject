@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_createTask_to_photoFragment"
             app:destination="@id/photoFragment" />
+        <action
+            android:id="@+id/action_createTask_to_fragment_Reminders"
+            app:destination="@id/fragment_Reminders" />
     </fragment>
     <fragment
         android:id="@+id/audio"
@@ -130,5 +133,14 @@
         <action
             android:id="@+id/action_viewAudioFragment_to_viewMultimediaFragment"
             app:destination="@id/viewMultimediaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Reminders"
+        android:name="com.gabyperez.notes.fragment_Reminders"
+        android:label="fragment__reminders"
+        tools:layout="@layout/fragment__reminders" >
+        <action
+            android:id="@+id/action_fragment_Reminders_to_createTask"
+            app:destination="@id/createTask" />
     </fragment>
 </navigation>
