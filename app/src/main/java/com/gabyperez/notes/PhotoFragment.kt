@@ -1,10 +1,10 @@
 package com.gabyperez.notes
 
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentPhotoBinding
 import com.gabyperez.notes.model.Multimedia
@@ -26,7 +27,7 @@ import java.util.*
 
 class PhotoFragment : Fragment() {
     private lateinit var binding: FragmentPhotoBinding
-    private lateinit var photoURI: Uri
+    private var photoURI: Uri = "".toUri()
     private lateinit var miContext: Context
 
     override fun onAttach(context: Context) {
@@ -39,6 +40,13 @@ class PhotoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentPhotoBinding.inflate(layoutInflater)
+
+        binding.selectPhoto.setOnClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            startActivityForResult(intent, 111)
+        }
 
         binding.takePhoto.setOnClickListener {
             validarPermisos()
@@ -56,6 +64,7 @@ class PhotoFragment : Fragment() {
 
             binding.savePhoto.visibility = View.INVISIBLE
             binding.takePhoto.visibility = View.INVISIBLE
+            binding.selectPhoto.visibility = View.INVISIBLE
             binding.description.isEnabled = false
         }
 
@@ -78,42 +87,11 @@ class PhotoFragment : Fragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
-            setPic()
-        }
-    }
-
-    private fun setPic() {
-        // Get the dimensions of the View
-        val targetW: Int = binding.imageView.width
-        val targetH: Int = binding.imageView.height
-
-        val bmOptions = BitmapFactory.Options().apply {
-            // Get the dimensions of the bitmap
-            inJustDecodeBounds = true
-            val photoW: Int = outWidth
-            val photoH: Int = outHeight
-
-            // Determine how much to scale down the image
-            val scaleFactor: Int = Math.min(photoW / targetW, photoH / targetH)
-
-            // Decode the image file into a Bitmap sized to fill the View
-            inJustDecodeBounds = false
-            inSampleSize = scaleFactor
-            inPurgeable = true
-        }
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions)?.also { bitmap ->
-            binding.imageView.setImageBitmap(bitmap)
-        }
-    }
-
     private val REQUEST_TAKE_PHOTO = 1
     private fun dispatchTakePictureIntent() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             // Ensure that there's a camera activity to handle the intent
-            activity?.let {
+            activity?.let { it ->
                 takePictureIntent.resolveActivity(it.packageManager)?.also {
                     // Create the File where the photo should go
                     val photoFile: File? = try {
@@ -137,6 +115,28 @@ class PhotoFragment : Fragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == AppCompatActivity.RESULT_OK) {
+            binding.imageView.setImageURI(photoURI)
+        } else if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
+            miContext.grantUriPermission(
+                miContext.packageName,
+                photoURI,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+            data?.data?.also { uri ->
+
+                val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+
+                photoURI = uri
+                miContext.contentResolver.takePersistableUriPermission(photoURI, takeFlags)
+            }
+            binding.imageView.setImageURI(photoURI)
+        }
+    }
+
     private fun validarPermisos() {
         when {
             ContextCompat.checkSelfPermission(
@@ -155,10 +155,10 @@ class PhotoFragment : Fragment() {
                     setTitle("Acepta permisos, por favor :c")
                     setMessage("Acepta los permisos para poder guardar archivos multimedia en tus tareas y notas")
                         .setNegativeButton("Ok", DialogInterface.OnClickListener {
-                                dialogInterface, i ->
+                                _, _ ->
                         })
                         .setPositiveButton("Solicitar permiso de nuevo",
-                            DialogInterface.OnClickListener { dialogInterface, i ->
+                            DialogInterface.OnClickListener { _, _ ->
                                 requestPermissions(
                                     arrayOf("android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"),
                                     REQUEST_TAKE_PHOTO)

@@ -28,4 +28,6 @@
     <string name="eliminar">Eliminar</string>
     <string name="buscar">buscar</string>
     <string name="buscar_por_titulo">Buscar por titulo</string>
+    <string name="seleccionar_foto">Seleccionar foto</string>
+    <string name="seleccionar_video">Seleccionar video</string>
 </resources>

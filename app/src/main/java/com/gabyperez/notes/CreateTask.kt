@@ -29,11 +29,11 @@ class CreateTask : Fragment() {
     private lateinit var hora: EditText
     private var idNote: Int = -1
 
-    private var diaAux=0
-    private var mesAux=0
-    private var yearAux=0
-    private var horaAux=0
-    private var minuteAux=0
+    private var diaAux = 0
+    private var mesAux = 0
+    private var yearAux = 0
+    private var horaAux = 0
+    private var minuteAux = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
