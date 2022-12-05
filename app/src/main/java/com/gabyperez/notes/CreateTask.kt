@@ -2,14 +2,11 @@ package com.gabyperez.notes
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +27,13 @@ class CreateTask : Fragment() {
 
     private lateinit var fecha: EditText
     private lateinit var hora: EditText
+    private var idNote: Int = -1
+
+    private var diaAux=0
+    private var mesAux=0
+    private var yearAux=0
+    private var horaAux=0
+    private var minuteAux=0
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -44,16 +48,15 @@ class CreateTask : Fragment() {
         fecha = binding.txtDate
         hora = binding.txtHour
 
-        var id = -1
         val bundle = Bundle()
-        val currentTime = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
         //edit
         if(arguments?.getString("title") != null) {
             binding.titleTask.setText(arguments?.getString("title"))
             binding.descriptionTask.setText(arguments?.getString("description"))
             binding.txtDate.setText(arguments?.getString("dateEnd"))
             binding.txtHour.setText(arguments?.getString("hourEnd"))
-            id = arguments?.getString("id")!!.toInt()
+            idNote = arguments?.getString("id")!!.toInt()
             bundle.putString("id", id.toString())
             val completed = arguments?.getInt("completed")
 
@@ -114,12 +117,11 @@ class CreateTask : Fragment() {
             parentFragmentManager.setFragmentResult("key",bundle)
 
             //Notification
-            createNotificationChannel()
-            scheduleNotificaction(binding.titleTask.text.toString())
+            scheduleNotification(binding.titleTask.text.toString())
 
             //Insert
             lifecycleScope.launch{
-                if (id == -1){
+                if (idNote == -1){
                     //insert new task --> type=2
                     val newTask = Note(
                         2,
@@ -130,7 +132,6 @@ class CreateTask : Fragment() {
                         hora.text.toString(),
                         flag)
                     NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().insert(newTask)
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAll()
                 } else {
                     //update note
                     NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().
@@ -142,7 +143,6 @@ class CreateTask : Fragment() {
                         hora.text.toString(),
                         flag,
                         id)
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).NoteDao().getAll()
                 }
             }
             //Navigation
@@ -162,12 +162,15 @@ class CreateTask : Fragment() {
     }
 
     private fun showTimePikerDialog() {
-        val newFragment = TimePicker { onTimeSelected(it) }
+        val newFragment = TimePicker { hour, minute -> onTimeSelected(hour, minute) }
         activity?.let { newFragment.show(it.supportFragmentManager, "timePicker") }
     }
 
-    private fun onTimeSelected(time: String) {
-        hora.setText(time)
+    @SuppressLint("SetTextI18n")
+    private fun onTimeSelected(hour:Int, minute:Int) {
+        hora.setText("$hour:$minute")
+        this.horaAux = hour
+        this.minuteAux = minute
     }
 
     private fun showDatePickerDialog() {
@@ -177,57 +180,40 @@ class CreateTask : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun onDateSelected(day: Int, month: Int, year: Int) {
-        fecha.setText("$day/$month/$year")
+        val aux=month+1
+        fecha.setText("$day/$aux/$year")
+
+        this.diaAux = day
+        this.mesAux = month
+        this.yearAux = year
     }
 
-    // Notification
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel() {
-        val name = "Notif Channel"
-        val desc = "A description of the Channel"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelID, name, importance)
-        channel.description = desc
-        val notificationManager =
-            activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-    }
-
+    //Notification
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun scheduleNotificaction(titulo: String) {
+    private fun scheduleNotification(titulo: String) {
+        getTime(titulo)
+    }
+
+    private fun startAlarm(calendar: Calendar, titulo: String) {
+        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, MiReceiverParaAlarma::class.java)
         val message = "Tienes esta tarea pendiente"
-        intent.putExtra(titleExtra, titulo)
-        intent.putExtra(messageExtra, message)
-
-        val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            notificationID,
-            intent,
-            0
-        )
-
-       // val time = getTime()
-        alarmManager.set(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            //time,
-            SystemClock.elapsedRealtime() + 10 * 1000,
-            pendingIntent
-        )
+        intent.putExtra(tituloExtra2, titulo)
+        intent.putExtra(mensajeExtra2, message)
+        val pendingIntent = PendingIntent.getBroadcast(context, notificationID, intent, 0)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
 
-    private fun getTime(): Long{
-     val minute = hora.text.toString().substring(3,4).toInt()
-        val hour = hora.text.toString().substring(0,1).toInt()
-        val day = fecha.text.toString().substring(0,1).toInt()
-        val month = fecha.text.toString().substring(3,4).toInt()
-        val year = fecha.text.toString().substring(6,9).toInt()
-
+    private fun getTime(titulo: String){
         val calendar = Calendar.getInstance()
-        calendar.set(2022,11, 29, 23, 0)
-        return calendar.timeInMillis
+        calendar.set(Calendar.HOUR_OF_DAY,horaAux)
+        calendar.set(Calendar.MINUTE,minuteAux)
+        calendar.set(Calendar.SECOND,0)
+        startAlarm(calendar, titulo)
     }
+
+
+
+
 
 }
