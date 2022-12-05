@@ -194,12 +194,13 @@ class CreateTask : Fragment() {
         getTime(titulo)
     }
 
+
     private fun startAlarm(calendar: Calendar, titulo: String) {
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, MiReceiverParaAlarma::class.java)
         val message = "Tienes esta tarea pendiente"
-        intent.putExtra(tituloExtra2, titulo)
-        intent.putExtra(mensajeExtra2, message)
+        intent.putExtra(titleExtra, titulo)
+        intent.putExtra(mensajeExtra, message)
         val pendingIntent = PendingIntent.getBroadcast(context, notificationID, intent, 0)
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }

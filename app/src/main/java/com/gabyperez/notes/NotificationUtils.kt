@@ -45,7 +45,7 @@ class  NotificationUtils(base: Context) : ContextWrapper(base) {
         }
         val pendingIntent = PendingIntent.getActivity(this, notificationID, intent, 0)
         return NotificationCompat.Builder(applicationContext, MYCHANNEL_ID)
-            .setContentTitle(titulo)
+            .setContentTitle("$titulo")
             .setContentText("Tienes una tarea pendiente")
             .setSmallIcon(R.drawable.timbre)
             .setColor(Color.YELLOW)
