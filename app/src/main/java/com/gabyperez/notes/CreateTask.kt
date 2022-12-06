@@ -19,6 +19,7 @@ import androidx.navigation.findNavController
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentCreateTaskBinding
 import com.gabyperez.notes.model.Note
+import com.gabyperez.notes.model.Reminder
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,7 +29,7 @@ class CreateTask : Fragment() {
     private lateinit var fecha: EditText
     private lateinit var hora: EditText
     private var idNote: Int = -1
-
+    private  var idReminder: Int = -1
     private var diaAux = 0
     private var mesAux = 0
     private var yearAux = 0
@@ -121,11 +122,21 @@ class CreateTask : Fragment() {
 
             //Notification
             scheduleNotification(binding.titleTask.text.toString())
+            //Insert Notification
+            lifecycleScope.launch{
+                if (idReminder == -1){
+                    val newReminder = Reminder(
+                        idNote,
+                       "$diaAux/$mesAux/$yearAux",
+                        "$horaAux:$minuteAux"
+                        )
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().insert(newReminder)
+                }
+            }
 
             //Insert
             lifecycleScope.launch{
                 if (idNote == -1){
-                    //insert new task --> type=2
                     val newTask = Note(
                         2,
                         binding.titleTask.text.toString(),

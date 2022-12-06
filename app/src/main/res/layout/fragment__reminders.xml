@@ -12,21 +12,26 @@
             android:id="@+id/btnFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="47dp"
-            android:layout_marginEnd="301dp"
-            android:text="Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/scrollView3"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="23dp"
+            android:layout_marginBottom="21dp"
+            android:text="@string/fecha"
+            app:layout_constraintBottom_toTopOf="@+id/btnHourReminder"
+            app:layout_constraintEnd_toStartOf="@+id/txtFecha"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnHourReminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Button"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="45dp"
+            android:text="@string/hora"
+            app:layout_constraintBottom_toTopOf="@+id/btnGuardarR"
+            app:layout_constraintEnd_toStartOf="@+id/txtHoraR"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnFecha" />
 
@@ -34,44 +39,57 @@
             android:id="@+id/scrollView3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/btnFecha"
+            android:layout_marginBottom="44dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/btnGuardarR">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listReminders"
                 android:layout_width="400dp"
                 android:layout_height="500dp"
                 android:layout_marginStart="1dp"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginBottom="1dp" />
 
         </ScrollView>
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/txtFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="6dp"
             android:ems="10"
-            android:text="Name"
-            app:layout_constraintBottom_toBottomOf="@+id/btnFecha"
-            app:layout_constraintStart_toEndOf="@+id/btnFecha" />
+            app:layout_constraintBottom_toTopOf="@+id/txtHoraR"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnFecha"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/txtHoraR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginEnd="5dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/btnHourReminder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnHourReminder" />
+
+        <Button
+            android:id="@+id/btnGuardarR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:layout_marginBottom="80dp"
+            android:backgroundTint="#8BC34A"
+            android:text="@string/guardar"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+            app:layout_constraintStart_toEndOf="@+id/btnHourReminder"
+            app:layout_constraintTop_toBottomOf="@+id/txtHoraR" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
