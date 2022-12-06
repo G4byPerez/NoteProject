@@ -16,6 +16,7 @@ import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gabyperez.notes.data.NoteDatabase
@@ -40,7 +41,7 @@ class fragment_Reminders : Fragment() {
     private var horaAux = 0
     private var minuteAux = 0
     lateinit var rv : RecyclerView
-
+    private var noteId : Int = 0
     var reminders : MutableList<Reminder> = mutableListOf<Reminder>()
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -51,12 +52,14 @@ class fragment_Reminders : Fragment() {
         binding = FragmentRemindersBinding.inflate(layoutInflater)
         fecha = binding.txtFecha
         hora = binding.txtHoraR
-        var id = -1
+
         rv = binding.listReminders
+
+
         //view reminder
         lifecycleScope.launch {
             reminders =
-                NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().getAllReminders(id)
+                NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().getAllReminders(arguments?.getString("id")!!.toInt())
         }
 
         rv.adapter = ReminderAdapter(reminders)
@@ -74,8 +77,17 @@ class fragment_Reminders : Fragment() {
         binding.btnGuardarR.setOnClickListener{
             //Notification
             scheduleNotification("Recordatorio")
+            //Insert Notification
+            lifecycleScope.launch{
+                    val newReminder = Reminder(
+                        arguments?.getString("id")!!.toInt(),
+                        "$diaAux/$mesAux/$yearAux",
+                        "$horaAux:$minuteAux"
+                    )
+                    NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().insert(newReminder)
+            }
+            it.findNavController().navigate(R.id.action_fragment_Reminders_to_createTask)
         }
-
         return binding.root
     }
 

@@ -112,7 +112,7 @@ class CreateTask : Fragment() {
         }
 
         binding.btnReminderT.setOnClickListener{
-            it.findNavController().navigate(R.id.action_createTask_to_fragment_Reminders)
+            it.findNavController().navigate(R.id.action_createTask_to_fragment_Reminders, bundle)
         }
         binding.saveTask.setOnClickListener {
             val bundle = Bundle()
@@ -121,9 +121,9 @@ class CreateTask : Fragment() {
             parentFragmentManager.setFragmentResult("key",bundle)
 
             //Notification
-            scheduleNotification(binding.titleTask.text.toString())
+            // scheduleNotification(binding.titleTask.text.toString())
             //Insert Notification
-            lifecycleScope.launch{
+           /* lifecycleScope.launch{
                 if (idReminder == -1){
                     val newReminder = Reminder(
                         idNote,
@@ -132,7 +132,7 @@ class CreateTask : Fragment() {
                         )
                     NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().insert(newReminder)
                 }
-            }
+            }*/
 
             //Insert
             lifecycleScope.launch{
