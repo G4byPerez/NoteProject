@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.model.Reminder
 
-class ReminderAdapter(var reminders: List<Reminder>): RecyclerView.Adapter<ReminderAdapter.ViewHolder>() {
+class ReminderAdapter(private var reminders: List<Reminder>): RecyclerView.Adapter<ReminderAdapter.ViewHolder>() {
     class ViewHolder(v : View) : RecyclerView.ViewHolder(v){
         var time : TextView
         var date : TextView
-        var btn_delete : ImageView
+        var btnDelete : ImageView
 
         init{
             time = v.findViewById(R.id.reminder_time)
             date = v.findViewById(R.id.reminder_date)
-            btn_delete = v.findViewById(R.id.btn_delete2)
+            btnDelete = v.findViewById(R.id.btn_delete2)
 
         }
     }
@@ -29,12 +29,13 @@ class ReminderAdapter(var reminders: List<Reminder>): RecyclerView.Adapter<Remin
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p = reminders[position]
-        var id = p.noteID
+        val id = p.noteID
         holder.time.text = p.time
         holder.date.text = p.date
-        holder.btn_delete.setOnClickListener{view : View ->
+
+        holder.btnDelete.setOnClickListener{
             NoteDatabase.getDatabase(holder.time.context).RerminderDAO().deleteReminder(p)
-            var reminders  = NoteDatabase.getDatabase(holder.time.context).RerminderDAO().getAllReminders(id)
+            val reminders  = NoteDatabase.getDatabase(holder.time.context).RerminderDAO().getAllReminders(id)
             this.reminders = reminders
             this.notifyItemRemoved(position)
         }

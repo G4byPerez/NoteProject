@@ -3,7 +3,6 @@ package com.gabyperez.notes
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -14,21 +13,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gabyperez.notes.data.NoteDatabase
-import com.gabyperez.notes.databinding.FragmentPhotoBinding
 import com.gabyperez.notes.databinding.FragmentRemindersBinding
-import com.gabyperez.notes.model.Note
 import com.gabyperez.notes.model.Reminder
 import kotlinx.coroutines.launch
 import java.util.*
 
 
-class fragment_Reminders : Fragment() {
+class RemindersFragment : Fragment() {
 
     private lateinit var binding:FragmentRemindersBinding
     lateinit var title :String
@@ -41,8 +36,7 @@ class fragment_Reminders : Fragment() {
     private var horaAux = 0
     private var minuteAux = 0
     lateinit var rv : RecyclerView
-    private var noteId : Int = 0
-    var reminders : MutableList<Reminder> = mutableListOf<Reminder>()
+    private var reminders : MutableList<Reminder> = mutableListOf()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -55,15 +49,16 @@ class fragment_Reminders : Fragment() {
 
         rv = binding.listReminders
 
-
         //view reminder
         lifecycleScope.launch {
             reminders =
-                NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().getAllReminders(arguments?.getString("id")!!.toInt())
+                NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().
+                getAllReminders(arguments?.getString("id")!!.toInt())
         }
 
         rv.adapter = ReminderAdapter(reminders)
-        rv.layoutManager = LinearLayoutManager(this@fragment_Reminders.requireContext())
+        rv.layoutManager = LinearLayoutManager(this@RemindersFragment.requireContext())
+
 
         //Date and hour
         binding.btnFecha.setOnClickListener {
@@ -75,8 +70,12 @@ class fragment_Reminders : Fragment() {
         }
 
         binding.btnGuardarR.setOnClickListener{
+
+            val note = NoteDatabase.getDatabase(requireActivity().applicationContext).
+            NoteDao().getById(arguments?.getString("id")!!.toInt())
+
             //Notification
-            scheduleNotification("Recordatorio")
+            scheduleNotification(note.title)
             //Insert Notification
             lifecycleScope.launch{
                     val newReminder = Reminder(
@@ -86,7 +85,7 @@ class fragment_Reminders : Fragment() {
                     )
                     NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().insert(newReminder)
             }
-            it.findNavController().navigate(R.id.action_fragment_Reminders_to_createTask)
+
         }
         return binding.root
     }
@@ -122,8 +121,6 @@ class fragment_Reminders : Fragment() {
         this.mesAux = month
         this.yearAux = year
     }
-
-
 
     private fun startAlarm(calendar: Calendar, titulo: String) {
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager

@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 class Home : Fragment() {
 
     lateinit var notes : List<Note>
-    lateinit var search : SearchView
 
 
     override fun onCreateView(

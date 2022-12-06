@@ -19,7 +19,6 @@ import androidx.navigation.findNavController
 import com.gabyperez.notes.data.NoteDatabase
 import com.gabyperez.notes.databinding.FragmentCreateTaskBinding
 import com.gabyperez.notes.model.Note
-import com.gabyperez.notes.model.Reminder
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +28,6 @@ class CreateTask : Fragment() {
     private lateinit var fecha: EditText
     private lateinit var hora: EditText
     private var idNote: Int = -1
-    private  var idReminder: Int = -1
     private var diaAux = 0
     private var mesAux = 0
     private var yearAux = 0
@@ -58,7 +56,7 @@ class CreateTask : Fragment() {
             binding.txtDate.setText(arguments?.getString("dateEnd"))
             binding.txtHour.setText(arguments?.getString("hourEnd"))
             idNote = arguments?.getString("id")!!.toInt()
-            bundle.putString("id", id.toString())
+            bundle.putString("id", idNote.toString())
             val completed = arguments?.getInt("completed")
 
             binding.checkBox.isChecked = completed == 0
@@ -112,27 +110,14 @@ class CreateTask : Fragment() {
         }
 
         binding.btnReminderT.setOnClickListener{
-            it.findNavController().navigate(R.id.action_createTask_to_fragment_Reminders, bundle)
+            it.findNavController().navigate(R.id.action_createTask_to_remindersFragment, bundle)
         }
+
         binding.saveTask.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("title", binding.titleTask.text.toString())
             bundle.putString("description", binding.descriptionTask.text.toString())
             parentFragmentManager.setFragmentResult("key",bundle)
-
-            //Notification
-            // scheduleNotification(binding.titleTask.text.toString())
-            //Insert Notification
-           /* lifecycleScope.launch{
-                if (idReminder == -1){
-                    val newReminder = Reminder(
-                        idNote,
-                       "$diaAux/$mesAux/$yearAux",
-                        "$horaAux:$minuteAux"
-                        )
-                    NoteDatabase.getDatabase(requireActivity().applicationContext).RerminderDAO().insert(newReminder)
-                }
-            }*/
 
             //Insert
             lifecycleScope.launch{
@@ -208,7 +193,6 @@ class CreateTask : Fragment() {
         getTime(titulo)
     }
 
-
     private fun startAlarm(calendar: Calendar, titulo: String) {
         val alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, MiReceiverParaAlarma::class.java)
@@ -226,9 +210,6 @@ class CreateTask : Fragment() {
         calendar.set(Calendar.SECOND,0)
         startAlarm(calendar, titulo)
     }
-
-
-
 
 
 }
